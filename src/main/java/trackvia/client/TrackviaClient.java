@@ -1158,6 +1158,55 @@ public class TrackviaClient {
     }
 
     /**
+     * Gets records available to the authenticated user in the given view with paging.
+     *
+     * Use with small tables, when all records can be reasonably transferred in a single call.
+     *
+     * @param viewId view identifier in which to get records
+     * @param start the index (0 based) of the first user record
+     * @param max retrieve no more than this many user records
+     * @return both field metadata and record data, as a record set
+     * @throws TrackviaApiException if the service fails to process this request
+     * @throws TrackviaClientException if an error occurs outside the service, failing the request
+     *
+     * @see #getRecords(Class, int) for records as an application-defined class
+     */
+    public RecordSet getRecords(final int viewId, final int start, final int max) throws TrackviaApiException, TrackviaClientException {
+        final Gson gson = this.recordAsMapGson;
+        final Authorized<RecordSet> action = new Authorized<>(this);
+
+        return action.execute(new Callable<RecordSet>() {
+            @Override
+            public RecordSet call() throws Exception {
+                HttpClientContext context = HttpClientContext.create();
+                return (RecordSet) execute(new CommandOverHttpGet<RecordSet>(context) {
+                    @Override
+                    public URI getApiRequestUri() throws URISyntaxException {
+                        final String path = String.format("%s/openapi/views/%d", TrackviaClient.this.baseUriPath, viewId);
+                        return new URIBuilder()
+                                .setScheme(TrackviaClient.this.scheme)
+                                .setHost(TrackviaClient.this.hostname)
+                                .setPort(TrackviaClient.this.port)
+                                .setPath(path)
+                                .setParameter(ACCESS_TOKEN_QUERY_PARAM, TrackviaClient.this.getAccessToken())
+                                .setParameter(USER_KEY_QUERY_PARAM, TrackviaClient.this.getApiUserKey())
+                                .setParameter("start", (start >= 0) ? String.valueOf(start) : "0")
+                                .setParameter("max", (max > 0) ? String.valueOf(max) : "1000")
+                                .build();
+                    }
+
+                    @Override
+                    public RecordSet processResponseEntity(final HttpEntity entity) throws IOException {
+                        Reader jsonReader = new InputStreamReader(entity.getContent());
+
+                        return gson.fromJson(jsonReader, RecordSet.class);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Gets a record.  The record must be available to the authenticated user in the given view.
      *
      * @param domainClass return instances of this type (instead of a raw record Map<String, Object>)
