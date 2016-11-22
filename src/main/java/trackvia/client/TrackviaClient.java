@@ -1203,7 +1203,7 @@ public class TrackviaClient {
             @Override
             public RecordSet call() throws Exception {
                 HttpClientContext context = HttpClientContext.create();
-                return (RecordSet) execute(new CommandOverHttpGet<RecordSet>(context) {
+                return (RecordSet) execute(new CommandOverHttpGet<RecordSet>(context, TrackviaClient.this) {
                     @Override
                     public URI getApiRequestUri() throws URISyntaxException {
                         final String path = String.format("%s/openapi/views/%d", TrackviaClient.this.baseUriPath, viewId);
