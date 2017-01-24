@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -36,7 +37,7 @@ public abstract class OverHttpCommand<T> {
     public abstract HttpClientContext getContext();
     public abstract T execute(CloseableHttpClient httpClient);
     public abstract URI getApiRequestUri() throws URISyntaxException;
-    public abstract T processResponseEntity(final HttpEntity entity) throws IOException;
+    public abstract T processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException;
     
     public OverHttpCommand(final HttpClientContext context, TrackviaClient tvClient) {
     	this.tvClient = tvClient;
@@ -94,7 +95,7 @@ public abstract class OverHttpCommand<T> {
     	int statusCode = response.getStatusLine().getStatusCode();
     	String badJsonStr = "Nothing went wrong first. This should never happen";
     	if (validResponseCodes.contains(statusCode)) {
-    		result = processResponseEntity(response.getEntity());
+    		result = processResponseEntity(response.getEntity(), response);
     		log.debug("{} api response: {}", uri.getPath(), (result == null) ? ("none") : (result.toString()));
         } else if(response.getStatusLine().getStatusCode() == HttpStatus.SC_GONE){
         	ApiErrorResponse apiError = new ApiErrorResponse();

@@ -21,9 +21,11 @@ import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.Header;
 import org.apache.http.HttpClientConnection;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -40,7 +42,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -609,7 +610,7 @@ public class TrackviaClient {
             }
 
             @Override
-            public OAuth2Token processResponseEntity(final HttpEntity entity) throws IOException {
+            public OAuth2Token processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                 Reader jsonReader = new InputStreamReader(entity.getContent());
 
                 return gson.fromJson(jsonReader, OAuth2Token.class);
@@ -650,7 +651,7 @@ public class TrackviaClient {
             }
 
             @Override
-            public OAuth2Token processResponseEntity(final HttpEntity entity) throws IOException {
+            public OAuth2Token processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                 Reader jsonReader = new InputStreamReader(entity.getContent());
 
                 return gson.fromJson(jsonReader, OAuth2Token.class);
@@ -707,7 +708,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public UserRecordSet processResponseEntity(final HttpEntity entity) throws IOException {
+                    public UserRecordSet processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, UserRecordSet.class);
@@ -777,7 +778,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public UserRecord processResponseEntity(final HttpEntity entity) throws IOException {
+                    public UserRecord processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, UserRecord.class);
@@ -831,7 +832,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public List<App> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public List<App> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
                         Type responseType = new TypeToken<List<App>>() {
                         }.getType();
@@ -903,7 +904,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public List<View> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public List<View> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
                         Type responseType = new TypeToken<List<View>>() {
                         }.getType();
@@ -989,7 +990,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return deserializer.fromJson(jsonReader, returnType);
@@ -1055,7 +1056,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public RecordSet processResponseEntity(final HttpEntity entity) throws IOException {
+                    public RecordSet processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, RecordSet.class);
@@ -1126,7 +1127,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return deserializer.fromJson(jsonReader, returnType);
@@ -1171,7 +1172,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public RecordSet processResponseEntity(final HttpEntity entity) throws IOException {
+                    public RecordSet processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, RecordSet.class);
@@ -1220,7 +1221,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public RecordSet processResponseEntity(final HttpEntity entity) throws IOException {
+                    public RecordSet processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, RecordSet.class);
@@ -1269,7 +1270,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public DomainRecord<T> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public DomainRecord<T> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return deserializer.fromJson(jsonReader, returnType);
@@ -1315,7 +1316,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public Record processResponseEntity(final HttpEntity entity) throws IOException {
+                    public Record processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, Record.class);
@@ -1372,7 +1373,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return deserializer.fromJson(jsonReader, returnType);
@@ -1440,7 +1441,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public RecordSet processResponseEntity(final HttpEntity entity) throws IOException {
+                    public RecordSet processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, RecordSet.class);
@@ -1505,7 +1506,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public DomainRecordSet<T> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return deserializer.fromJson(jsonReader, returnType);
@@ -1574,7 +1575,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public RecordSet processResponseEntity(final HttpEntity entity) throws IOException {
+                    public RecordSet processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, RecordSet.class);
@@ -1646,7 +1647,7 @@ public class TrackviaClient {
                     }
 
 					@Override
-					public Void processResponseEntity(HttpEntity entity) throws IOException {
+					public Void processResponseEntity(HttpEntity entity, HttpResponse response) throws IOException {
 						// no-op
 						return null;
 					}
@@ -1697,7 +1698,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public DomainRecord<T> processResponseEntity(final HttpEntity entity) throws IOException {
+                    public DomainRecord<T> processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return deserializer.fromJson(jsonReader, returnType);
@@ -1750,7 +1751,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public Record processResponseEntity(final HttpEntity entity) throws IOException {
+                    public Record processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, Record.class);
@@ -1806,7 +1807,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public Record processResponseEntity(final HttpEntity entity) throws IOException {
+                    public Record processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Reader jsonReader = new InputStreamReader(entity.getContent());
 
                         return gson.fromJson(jsonReader, Record.class);
@@ -1862,7 +1863,7 @@ public class TrackviaClient {
                     }
 
                     @Override
-                    public Void processResponseEntity(final HttpEntity entity) throws IOException {
+                    public Void processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
                         Files.copy(entity.getContent(), filePath);
 
                         return null;
@@ -1872,6 +1873,67 @@ public class TrackviaClient {
                 return null;
             }
         });
+    }
+    
+    /**
+     * Gets file contents from a record in a view of the authenticated user.
+     *
+     * @param viewId view identifier in which to modify the record
+     * @param recordId unique record identifier
+     * @param fileName name of the file (named like the corresponding Trackvia "column")
+     * @param dirPath locally accessible path to the {@link java.nio.file.Path}
+     * @throws TrackviaApiException if the service fails to process this request
+     * @throws TrackviaClientException if an error occurs outside the service, failing the request
+     *
+     */
+    public Path getFileWithOriginalName(final int viewId, final long recordId, final String fileName, final Path directory)
+    		throws TrackviaApiException, TrackviaClientException {
+    	final Authorized<Path> action = new Authorized<>(this);
+    	
+    	return action.execute(new Callable<Path>() {
+    		@Override
+    		public Path call() throws Exception {
+    			HttpClientContext context = HttpClientContext.create();
+    			
+    			return (Path) execute(new CommandOverHttpGet<Path>(context, TrackviaClient.this) {
+    				@Override
+    				public URI getApiRequestUri() throws URISyntaxException {
+    					final String path = String.format("%s/openapi/views/%d/records/%d/files/%s",
+    							TrackviaClient.this.baseUriPath, viewId, recordId, fileName);
+    					return new URIBuilder()
+    							.setScheme(TrackviaClient.this.scheme)
+    							.setHost(TrackviaClient.this.hostname)
+    							.setPort(TrackviaClient.this.port)
+    							.setPath(path)
+    							.setParameter(ACCESS_TOKEN_QUERY_PARAM, TrackviaClient.this.getAccessToken())
+    							.setParameter(USER_KEY_QUERY_PARAM, TrackviaClient.this.getApiUserKey())
+    							.build();
+    				}
+    				
+    				@Override
+    				public Path processResponseEntity(final HttpEntity entity, HttpResponse response) throws IOException {
+    					Header[] headers = response.getHeaders("Content-Disposition");
+    					if (headers.length > 0) {
+    						String value = headers[0].getValue().substring(headers[0].getValue().indexOf("filename="));
+    						
+							String fileName = value.substring(value.indexOf("=") + 1);
+							Path path = directory.resolve(fileName);
+							
+			    			// fail fast if the target 'filePath' already exists; no overwrites allowed.
+			    			if (Files.exists(path)) {
+			    				throw new TrackviaClientException(String.format("Will not overwrite the file %s; aborting", path.toString()));
+			    			}
+							
+							Files.copy(entity.getContent(), path);
+							
+							return path;
+    						
+    					}
+						return null;
+    				}
+    			});
+    		}
+    	});
     }
 
     /**
@@ -1907,7 +1969,7 @@ public class TrackviaClient {
                     }
 
 					@Override
-					public Void processResponseEntity(HttpEntity entity) throws IOException {
+					public Void processResponseEntity(HttpEntity entity, HttpResponse response) throws IOException {
 						//no-op
 						return null;
 					}
